@@ -26,20 +26,22 @@ function Grid() {
         }
         for (let i = 0; i <= visitedNode.length; i++) {
             if (i == visitedNode.length) {
-                for (let j = 0; j < path.length; j++) {
-                    setTimeout(() => {
-                        const node = path[j]
-                        const { row, col } = node
-                        node.isTraversed = true
-                        const newGrid = grid.slice()
-                        newGrid[row][col] = node
-                        // grid[row][col] = {
-                        //     ...grid[row][col],
-                        //     isTraversed: true,
-                        // }
-                        setGrid(newGrid)
-                    }, 5 * j)
-                }
+                setTimeout(() => {
+                    for (let j = 0; j < path.length; j++) {
+                        setTimeout(() => {
+                            const node = path[j]
+                            const { row, col } = node
+                            node.isTraversed = true
+                            const newGrid = grid.slice()
+                            newGrid[row][col] = node
+                            // grid[row][col] = {
+                            //     ...grid[row][col],
+                            //     isTraversed: true,
+                            // }
+                            setGrid(newGrid)
+                        }, 10 * j)
+                    }
+                }, 10 * i)
                 return
             }
             setTimeout(() => {
