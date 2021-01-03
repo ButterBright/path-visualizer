@@ -1,6 +1,9 @@
 import { useState } from "react"
 import styled, { css } from "styled-components"
 import { dijkstra } from "../dijkstra"
+import Nav from "./nav"
+import GlobalStyle from "./globalStyle"
+import Legend from "./legend"
 
 function Grid() {
     const [grid, setGrid] = useState(createGrid())
@@ -9,7 +12,7 @@ function Grid() {
     const [start, changeStart] = useState(null)
     const [end, changeEnd] = useState(null)
 
-    function animateDijkstra(grid, start, end) {
+    function animateDijkstra() {
         const visitedNode = dijkstra(grid, start, end)
         let path = []
         let cur = visitedNode[visitedNode.length - 1]
@@ -171,6 +174,9 @@ function Grid() {
 
     return (
         <div>
+            <GlobalStyle />
+            <Nav handleClear={handleClear} handleStart={handleStart} handleEnd={handleEnd} handleWall={handleWall} animateDijkstra={animateDijkstra}/>
+            <Legend />
             {grid.map((row, rowIdx) => {
                 return (
                     <Row>
@@ -204,25 +210,14 @@ function Grid() {
                     </Row>
                 )
             })}
-            <Button>
-                <button onClick={handleClear}>clear</button>
-                <button onClick={handleStart}>start</button>
-                <button onClick={handleEnd}>end</button>
-                <button onClick={handleWall}>wall</button>
-            </Button>
-            <Button>
-                <button onClick={() => animateDijkstra(grid, start, end)}>
-                    visualize the path
-                </button>
-            </Button>
         </div>
     )
 }
 
 const Node = styled.div`
-    height: 20px;
-    width: 20px;
-    border: 0.5px solid;
+    height: 30px;
+    width: 30px;
+    border: 0.5px solid rgb(172, 225, 238);
     ${({ isWall }) =>
         isWall === true &&
         css`
@@ -300,12 +295,6 @@ const Node = styled.div`
                 }
             }
         `}
-`
-
-const Button = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 2em;
 `
 
 const Row = styled.div`
